@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Number Builder Website by GSE</title>
+        <meta charset="utf-8"/>
+        <script src="selectionOfNumbers.js"></script>
+        <link rel="stylesheet" type="text/css" href="main.css"/>
+    </head>
+    <body>
+    <form name=NumberBuilder>
+        <h1>Number Builder</h1>
+        <p>Select numbers to include in the total by clicking on the box to its left. Some numbers from 0 to 2651 can be made by the correct selection of numbers.</p>
+        <p id="surprise">Surprise: Try to guess in what year The University of Miami was founded!</strong>
+            
+        <ul id="numbers"></ul>
+    
+        <table>
+        <script>
+
+            for ( i=0; i < a.length; i++) {
+                document.write("<tr><td>")
+                document.write('<input type=checkbox name="', a[i], '" onClick=sum()>' ) 
+                document.write("</td><td>", data[i], "</td></tr>" )
+            }
+            document.write('<tr><td colspan=5>-----------------</td></tr>') 
+            document.write('<tr><td colspan=5><input type=text name="result" size=10 value=0>   Total</td></tr>') 
+            
+        </script>
+        </table>
+    </form>
+    </body>
+</html> 

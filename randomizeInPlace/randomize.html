@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Randomize In Place | Algorithm</title>
+
+<script type="text/javascript" src="randomize.js"></script>
+
+<link href="main.css" rel="stylesheet" type="text/css">
+
+</head>
+<body onload="initElement();">
+ 
+<div id="header">
+<h1>
+Randomize In Place Algorithm
+</h1>
+</div>
+
+
+<p>
+This is an animation of the randomize in place algorithm (pseudocode taken from CLRS book. Chapter 5, p 126)
+<br><br>
+Instructions: Click on the 'Next' button to follow the algorithm and click on the 'Swap' button when Step 3 is highlighted
+<div class="mybox">
+
+<div id="array">
+<div class="arraycell" id="n1">
+<div id="array1" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n2">
+<div id="array2" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n3">
+<div id="array3" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n4">
+<div id="array4" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n5">
+<div id="array5" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n6">
+<div id="array6" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n7">
+<div id="array7" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n8">
+<div id="array8" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n9">
+<div id="array9" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n10">
+<div id="array10" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n11">
+<div id="array11" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n12">
+<div id="array12" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n13">
+<div id="array13" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n14">
+<div id="array14" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n15">
+<div id="array15" class="arraytext"></div>
+</div>
+<div class="arraycell" id="n16">
+<div id="array16" class="arraytext"></div>
+</div>
+</div>
+
+<!-- left margin -->
+<div style="clear: left;"></div>
+
+<p>
+<div class="prebox" style="width:30em;">
+PSEUDOCODE FOR RANDOMIZE IN PLACE
+<br>
+<br>
+Goal: Randomize an array A of length n
+<br>
+<br>
+RANDOMIZE-IN-PLACE(A)
+<br>
+<!--           ALGORITHM SECTION              -->
+<span id="codeloc1">
+    &nbsp;&nbsp;1. n = A.length
+</span>
+<br>
+<span id="codeloc2">
+    &nbsp;&nbsp;2. for i = 1 to n
+</span>
+<br>
+<span id="codeloc3">
+    &nbsp;&nbsp;3.&nbsp;&nbsp;&nbsp;&nbsp; swap A[i] with A[Random(i,n)] &nbsp;&nbsp;<strong>(CLICK SWAP)</strong>
+</span>
+<br>
+<br>
+
+<!--            ALGORITHM SECTION             -->
+
+<table>
+<tr>
+<td style="border: solid red 2px; background: #eef;"
+onclick="window.location.reload()";>&nbsp;Restart&nbsp;
+<td style="border: solid red 2px; background: #fee;"
+onclick="algStep()">&nbsp;Next&nbsp;
+<td style="border: solid red 2px; background: #fee;"
+onclick="swap()">&nbsp;Swap&nbsp;
+</table>
+
+</div>
+</div><!-- i do not know if i need this extra div close -->
+
+
+<div id="footer">
+Modified: October 21th, 2021. Gabriela Serrano Echenagucia
+</div>
+</body>
+</html>

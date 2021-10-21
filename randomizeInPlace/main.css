@@ -1,0 +1,70 @@
+body {
+    font-family: "Trebuchet MS", Skia, "Lucida Sans Unicode", sans-serif;
+    font-size: 16px;
+    margin: 2.5em auto 5em 5% ;
+    width: 90%; 
+ }
+ 
+ #header {
+    margin: 3em 0 ;
+    border: 3px #369;
+    border-style: solid solid ;
+    padding: 0em  2em 0 ;
+    text-align: center ;
+ }
+ 
+ #header .title {
+    font-size: 1.6em ;
+    margin-bottom: 0 ;
+ }
+ 
+ #footer {
+    margin: 3em 0 ;
+    /*border: 2px #036;*/
+    border: 3px #369;
+    border-style: solid solid ;
+    padding: .7em ;
+    
+ }
+ 
+ #footer img { 
+    border: none ;
+ }
+ 
+ .section {
+    font-size: 1.1em ;
+    font-weight: bold ;
+ }
+ 
+ a { 
+    color: #339 ; 
+    text-decoration: none ;
+ }
+ 
+ .mybox {
+    border: 3px #369;
+    border-style: solid solid ;
+    padding: 1.5em ;
+    margin: 2em 0 ;
+ }
+ 
+ .prebox {
+    padding: 1em ;
+    background: #ffc; 
+    overflow: scroll; 
+ }
+ 
+ .arraytext {
+    float: left; 
+    text-align: center; 
+    width: 100%; 
+    margin-top: .5em ;
+    font-size: 1.5em ;
+ }
+ 
+ .arraycell {
+     float: left;
+     width: 3em ;
+     height: 3em ;
+     background: #999 ;
+ }

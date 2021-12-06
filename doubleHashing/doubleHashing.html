@@ -1,0 +1,281 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Double Hashing Animation | GSE</title>
+<!--
+<script type="text/javascript" src="myjavascript.js"></script>
+<link href="course.css" rel="stylesheet" type="text/css">
+-->
+<style type="text/css"><!--
+   /* internal styles */
+body {
+   font-family: "Trebuchet MS", Skia, "Lucida Sans Unicode", sans-serif;
+   font-size: 16px;
+   margin: 2.5em auto 5em 5% ;
+   width: 90%; 
+}
+
+#header {
+   margin: 3em 0 ;
+   border: 3px #369;
+   border-style: solid solid ;
+   padding: 0em  2em 0 ;
+   text-align: center ;
+}
+
+#header .title {
+   font-size: 1.6em ;
+   margin-bottom: 0 ;
+}
+
+#footer {
+   margin: 3em 0 ;
+   /*border: 2px #036;*/
+   border: 3px #369;
+   border-style: solid solid ;
+   padding: .7em ;
+   
+}
+
+#footer img { 
+   border: none ;
+}
+
+.section {
+   font-size: 1.1em ;
+   font-weight: bold ;
+}
+
+a { 
+   color: #339 ; 
+   text-decoration: none ;
+}
+
+.prebox {
+   background: #ffc; 
+   overflow: scroll; 
+}
+
+.prebox span {
+   background: #fcc ;
+}
+
+
+.bucketnumber {
+   margin-top: 4.5em; 
+   text-align: center;
+   color: #555 ;
+}
+
+.buckettext {
+   float: left; 
+   text-align: center; 
+   width: 100%; 
+   margin-top: 1em ;
+   font-size: 1.5em ;
+}
+
+.bucketbox {
+   float: left; width: 4em; height: 4em;
+}
+
+#hashtablecontainer {
+   height: 8em ;
+}
+
+--></style>
+
+<script type="text/javascript">
+
+//
+// Hashing code
+
+var TABLE_SIZE = 16 ;
+
+var bucketcolor = new Array( 
+	'#ff8',
+	'#dca',
+	'#f88',
+	'#f8c',
+	'#c8f',
+	'#88f',
+	'#8ff',
+	'#8f8',	
+	'#ff8',
+	'#dca',
+	'#f88',
+	'#f8c',
+	'#c8f',
+	'#88f',
+	'#8ff',
+	'#8f8'
+	);
+
+function setElementValue(elementId, value) {
+	if ( document.getElementById(elementId).innerText!=undefined ) {
+		document.getElementById(elementId).innerText = value ;
+	} else {
+		document.getElementById(elementId).textContent = value ;
+	}
+}
+
+function setCellColor(cell, color) {
+	document.getElementById(cell).style.background = color ;
+}
+
+function makeBucketHTMLString(i) {
+	return '<div class="bucketbox" id="bb_'+i+'" style="background: '+bucketcolor[i]+';">'
+		+'<div id="bucket_'+i+'" class="buckettext"><'
+		+ '/div><div class="bucketnumber">'+i+'<'+'/div><'+'/div>' ;
+}
+
+
+function initElement() {
+	var el = document.getElementById("hashtablecontainer") ;
+	var i ;
+	for (i=0;i<TABLE_SIZE;i++ ) {
+		el.innerHTML = el.innerHTML + makeBucketHTMLString(i) ;
+	}
+}
+ 
+function setElementValue(elementId, value) {
+	if ( document.getElementById(elementId).innerText!=undefined ) {
+		document.getElementById(elementId).innerText = value ;
+	} else {
+		document.getElementById(elementId).textContent = value ;
+	}
+}
+
+function getElementValue(elementId) {
+	if ( document.getElementById(elementId).innerText!=undefined ) {
+		return document.getElementById(elementId).innerText ;
+	} else {
+		return document.getElementById(elementId).textContent ;
+	}
+}
+
+function getFromBucket(b) {
+// check for IE or Gecko. This is Gecko only:
+	return getElementValue('bucket_'+b) ;
+}
+
+function putToBucket(b,t) {
+// check for IE or Gecko. This is Gecko only:
+	setElementValue('bucket_'+b,t) ;
+	document.getElementById('bucket_'+b).style.color="#0a0" ;
+}
+
+function makeBucketsBlack() {
+	var i ;
+	for ( i=0;i<TABLE_SIZE;i++ )
+		document.getElementById('bucket_'+i).style.color="#000" ;
+}
+
+function colorBucketTouched(i) {
+	document.getElementById('bucket_'+i).style.color="#a00" ;
+}
+
+function clearInputValues() {
+	var i ;
+	for ( i=0;i<TABLE_SIZE;i++ ) {
+		putToBucket(i,"") ;
+	}
+}
+
+function hashOne(j){
+
+	return (j % TABLE_SIZE);
+}
+
+function hashTwo(j){
+
+	return 2 * (j % 4) + 1; 
+}
+
+function hashTableInsert(j) {
+	var i = 0;
+	var h = (hashOne(j) + (i * hashTwo(j)) ) % TABLE_SIZE; 
+	while ( getFromBucket(h) != "" ) {
+		colorBucketTouched(h) ;
+		h = (hashOne(j) + (i * hashTwo(j)) ) % TABLE_SIZE ;
+		i++ ;
+		if ( i>TABLE_SIZE ) break ;
+	}
+	putToBucket(h,j) ;
+}
+
+
+function getInputValue() {
+    var s = document.getElementById('hashin').value ;
+	var j = parseInt(s) ;
+	makeBucketsBlack() ;
+	if ( !isNaN(j) ) {
+		hashTableInsert(j) ;
+	}
+	document.getElementById('hashin').value="" ;
+}
+</script>
+
+</head>
+<body onload="initElement();">
+ 
+<div id="header">
+<h1>
+Hashing: Double Hashing
+</h1>
+</div>
+
+
+<h2>
+Hashtable
+</h2>
+
+<div id="hashtablecontainer">
+<!-- left margin -->
+<div style="float: left; width: 2em;">&nbsp;</div>
+<!-- javascript will create buckets here -->
+<!--    background color for the buckets is described by entries in array bucketcolor -->
+
+</div>
+
+
+<h2>Input</h2>
+
+<!-- left margin -->
+<div style="float: left; width: 2em;">&nbsp;</div>
+
+<table>
+
+<tr>
+<th style="background: #cfc; width: 10em;">Value
+<td><input type="text" id="hashin">
+<tr>
+<th style="border: solid red 2px; background: #eef;"
+onclick="getInputValue()">&nbsp;Enter&nbsp;
+<th style="border: solid red 2px; background: #eef;"
+onclick="clearInputValues()">&nbsp;Clear&nbsp;
+</table>
+
+<h2>
+Overview
+</h2>
+
+<p>
+This demonstrates <strong>double hashing</strong> for solving collisions (when two keys are hashed to the same index in a hash table).
+A normal hashing process consists of a hash function taking a key and producing the hash table index for that key.
+In <strong>double hashing</strong>, there are two hash functions that will take place until an empty cell is found.
+The second hash function is used to provide an offset value in case the first function causes a collision.
+<br>
+<br>
+The collided cells will have the resident value shown in red. The newly inserted element is shown in
+green.
+</p>
+
+
+<div id="footer">
+Updated: 5 December 2021. Gabriela Serrano Echenagucia
+</div>
+</body>
+</html>

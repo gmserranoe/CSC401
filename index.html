@@ -1,195 +1,221 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Randomize In Place | Algorithm</title>
-
-<!-- <script type="text/javascript" src="randomize.js"></script> 
-<link href="main.css" rel="stylesheet" type="text/css"> -->
-
-<style>
-    body {
-    font-family: "Trebuchet MS", Skia, "Lucida Sans Unicode", sans-serif;
-    font-size: 16px;
-    margin: 2.5em auto 5em 5% ;
-    width: 90%; 
- }
- 
- #header {
-    margin: 3em 0 ;
-    border: 3px #369;
-    border-style: solid solid ;
-    padding: 0em  2em 0 ;
-    text-align: center ;
- }
- 
- #header .title {
-    font-size: 1.6em ;
-    margin-bottom: 0 ;
- }
- 
- #footer {
-    margin: 3em 0 ;
-    /*border: 2px #036;*/
-    border: 3px #369;
-    border-style: solid solid ;
-    padding: .7em ;
-    
- }
- 
- #footer img { 
-    border: none ;
- }
- 
- .section {
-    font-size: 1.1em ;
-    font-weight: bold ;
- }
- 
- a { 
-    color: #339 ; 
-    text-decoration: none ;
- }
- 
- .mybox {
-    border: 3px #369;
-    border-style: solid solid ;
-    padding: 1.5em ;
-    margin: 2em 0 ;
- }
- 
- .prebox {
-    padding: 1em ;
-    background: #ffc; 
-    overflow: scroll; 
- }
- 
- .arraytext {
-    float: left; 
-    text-align: center; 
-    width: 100%; 
-    margin-top: .5em ;
-    font-size: 1.5em ;
- }
- 
- .arraycell {
-     float: left;
-     width: 3em ;
-     height: 3em ;
-     background: #999 ;
- }
-</style>
-
-<script>
-var bluearray =[ "#00f", "#11f", "#22f", "#33f", "#44f", "#55f", "#66f", "#77f",
-"#88f", "#99f", "#aaf", "#bbf", "#ccf", "#ddf", "#eef", "#fff" ] ;
-
-var cb_color  = "#ffc" ; //code background
-var cbh_color = "#faa" ; //code background highlight
-
-var a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-var temp;
-var pos;
-let k = 0;
-
-    function randomize(k){
-        temp = a[k];
-        pos = parseInt(random(k, 16))
-        swapIndexes(k, pos);
-        }
-
-    function random(min, max){
-        return Math.random() * (max - min) + min;
-    }
-
-    function swapIndexes(x,y){
-        a[x] = a[y];
-        a[y] = temp;
-    }
-
-function swap() { 
-    initElement() 
-    nextPress = true;
-
+<title>Double Hashing Animation | GSE</title>
+<!--
+<script type="text/javascript" src="myjavascript.js"></script>
+<link href="course.css" rel="stylesheet" type="text/css">
+-->
+<style type="text/css"><!--
+   /* internal styles */
+body {
+   font-family: "Trebuchet MS", Skia, "Lucida Sans Unicode", sans-serif;
+   font-size: 16px;
+   margin: 2.5em auto 5em 5% ;
+   width: 90%; 
 }
+
+#header {
+   margin: 3em 0 ;
+   border: 3px #369;
+   border-style: solid solid ;
+   padding: 0em  2em 0 ;
+   text-align: center ;
+}
+
+#header .title {
+   font-size: 1.6em ;
+   margin-bottom: 0 ;
+}
+
+#footer {
+   margin: 3em 0 ;
+   /*border: 2px #036;*/
+   border: 3px #369;
+   border-style: solid solid ;
+   padding: .7em ;
+   
+}
+
+#footer img { 
+   border: none ;
+}
+
+.section {
+   font-size: 1.1em ;
+   font-weight: bold ;
+}
+
+a { 
+   color: #339 ; 
+   text-decoration: none ;
+}
+
+.prebox {
+   background: #ffc; 
+   overflow: scroll; 
+}
+
+.prebox span {
+   background: #fcc ;
+}
+
+
+.bucketnumber {
+   margin-top: 4.5em; 
+   text-align: center;
+   color: #555 ;
+}
+
+.buckettext {
+   float: left; 
+   text-align: center; 
+   width: 100%; 
+   margin-top: 1em ;
+   font-size: 1.5em ;
+}
+
+.bucketbox {
+   float: left; width: 4em; height: 4em;
+}
+
+#hashtablecontainer {
+   height: 8em ;
+}
+
+--></style>
+
+<script type="text/javascript">
+
+//
+// Hashing code
+
+var TABLE_SIZE = 16 ;
+
+var bucketcolor = new Array( 
+	'#ff8',
+	'#dca',
+	'#f88',
+	'#f8c',
+	'#c8f',
+	'#88f',
+	'#8ff',
+	'#8f8',	
+	'#ff8',
+	'#dca',
+	'#f88',
+	'#f8c',
+	'#c8f',
+	'#88f',
+	'#8ff',
+	'#8f8'
+	);
 
 function setElementValue(elementId, value) {
-    if ( document.getElementById(elementId).innerText!=undefined ) {
-        document.getElementById(elementId).innerText = value ;
-    } else {
-        document.getElementById(elementId).textContent = value ;
-        }
-    }
+	if ( document.getElementById(elementId).innerText!=undefined ) {
+		document.getElementById(elementId).innerText = value ;
+	} else {
+		document.getElementById(elementId).textContent = value ;
+	}
+}
+
+function setCellColor(cell, color) {
+	document.getElementById(cell).style.background = color ;
+}
+
+function makeBucketHTMLString(i) {
+	return '<div class="bucketbox" id="bb_'+i+'" style="background: '+bucketcolor[i]+';">'
+		+'<div id="bucket_'+i+'" class="buckettext"><'
+		+ '/div><div class="bucketnumber">'+i+'<'+'/div><'+'/div>' ;
+}
+
 
 function initElement() {
-    var i ;
-    k++;
-    for (i = 1; i < 17; i++) {
-        document.getElementById('n' + i).style.background = bluearray[16-i] ;
-        document.getElementById('n' + i).style.color = "black" ;
-        setElementValue('array' + i, a[i-1]) ;
-    }
-
-    algStep_g = 1 ;
-    nextPress = false;
-
-    document.getElementById("codeloc1").style.background = cb_color ;
-    document.getElementById("codeloc2").style.background = cb_color ;
-    document.getElementById("codeloc3").style.background = cb_color ;
-
-    setCodeColors(0) ;
+	var el = document.getElementById("hashtablecontainer") ;
+	var i ;
+	for (i=0;i<TABLE_SIZE;i++ ) {
+		el.innerHTML = el.innerHTML + makeBucketHTMLString(i) ;
+	}
+}
+ 
+function setElementValue(elementId, value) {
+	if ( document.getElementById(elementId).innerText!=undefined ) {
+		document.getElementById(elementId).innerText = value ;
+	} else {
+		document.getElementById(elementId).textContent = value ;
+	}
 }
 
-function currentCell(cell){
-    document.getElementById('n'+cell).style.background = "#faa" ;
-}
-// DO NOT GIVE ACCESS FROM 3. TO NEXT (MODIFY)
-function algStep() {
-    switch(algStep_g) {
-        case 1:
-            setCodeColors(1) ;
-            algStep_g = 2;
-            break;
-        case 2: //(highlight cell that contains current i)
-            setCodeColors(2) ;
-            currentCell(k);
-            randomize(k-1)
-            algStep_g = 3
-            break;
-        case 3: //(highlight two cells that are going to interchange)
-            setCodeColors(3) ;
-            swapCell(pos+1);
-            algStep_g = 4;
-            break;
-        case 4: // (actual swap)
-            if (!nextPress){
-                break;
-            }
-            nextPress = false;
-            setCodeColors(3)
-            setElementValue('array'+(k-1), a[pos])
-            setElementValue('array'+(pos+1), a[k])
-            k++;
-            algStep_g = 2; //when done and next i
-            break;
-            
-    }
-    //return;
-
+function getElementValue(elementId) {
+	if ( document.getElementById(elementId).innerText!=undefined ) {
+		return document.getElementById(elementId).innerText ;
+	} else {
+		return document.getElementById(elementId).textContent ;
+	}
 }
 
-function swapCell(s){
-    //document.getElementById('n'+f).style.background = "#ffff08" ;
-    document.getElementById('n'+s).style.background = "#ffff08" ;
-
+function getFromBucket(b) {
+// check for IE or Gecko. This is Gecko only:
+	return getElementValue('bucket_'+b) ;
 }
 
-function setCodeColors(j) {
-    document.getElementById("codeloc1").style.background = cb_color ;
-    document.getElementById("codeloc2").style.background = cb_color ;
-    document.getElementById("codeloc3").style.background = cb_color ;
-    document.getElementById("codeloc"+ j).style.background = cbh_color ;
-    }
+function putToBucket(b,t) {
+// check for IE or Gecko. This is Gecko only:
+	setElementValue('bucket_'+b,t) ;
+	document.getElementById('bucket_'+b).style.color="#0a0" ;
+}
+
+function makeBucketsBlack() {
+	var i ;
+	for ( i=0;i<TABLE_SIZE;i++ )
+		document.getElementById('bucket_'+i).style.color="#000" ;
+}
+
+function colorBucketTouched(i) {
+	document.getElementById('bucket_'+i).style.color="#a00" ;
+}
+
+function clearInputValues() {
+	var i ;
+	for ( i=0;i<TABLE_SIZE;i++ ) {
+		putToBucket(i,"") ;
+	}
+}
+
+function hashOne(j){
+
+	return (j % TABLE_SIZE);
+}
+
+function hashTwo(j){
+
+	return 2 * (j % 4) + 1; 
+}
+
+function hashTableInsert(j) {
+	var i = 0;
+	var h = (hashOne(j) + (i * hashTwo(j)) ) % TABLE_SIZE; 
+	while ( getFromBucket(h) != "" ) {
+		colorBucketTouched(h) ;
+		h = (hashOne(j) + (i * hashTwo(j)) ) % TABLE_SIZE ;
+		i++ ;
+		if ( i>TABLE_SIZE ) break ;
+	}
+	putToBucket(h,j) ;
+}
+
+
+function getInputValue() {
+    var s = document.getElementById('hashin').value ;
+	var j = parseInt(s) ;
+	makeBucketsBlack() ;
+	if ( !isNaN(j) ) {
+		hashTableInsert(j) ;
+	}
+	document.getElementById('hashin').value="" ;
+}
 </script>
 
 </head>
@@ -197,114 +223,59 @@ function setCodeColors(j) {
  
 <div id="header">
 <h1>
-Randomize In Place Algorithm
+Hashing: Double Hashing
 </h1>
 </div>
 
 
-<p>
-This is an animation of the randomize in place algorithm (pseudocode taken from CLRS book. Chapter 5, p 126)
-<br><br>
-Instructions: Click on the 'Next' button to follow the algorithm and click on the 'Swap' button when Step 3 is highlighted
-<div class="mybox">
+<h2>
+Hashtable
+</h2>
 
-<div id="array">
-<div class="arraycell" id="n1">
-<div id="array1" class="arraytext"></div>
+<div id="hashtablecontainer">
+<!-- left margin -->
+<div style="float: left; width: 2em;">&nbsp;</div>
+<!-- javascript will create buckets here -->
+<!--    background color for the buckets is described by entries in array bucketcolor -->
+
 </div>
-<div class="arraycell" id="n2">
-<div id="array2" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n3">
-<div id="array3" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n4">
-<div id="array4" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n5">
-<div id="array5" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n6">
-<div id="array6" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n7">
-<div id="array7" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n8">
-<div id="array8" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n9">
-<div id="array9" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n10">
-<div id="array10" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n11">
-<div id="array11" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n12">
-<div id="array12" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n13">
-<div id="array13" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n14">
-<div id="array14" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n15">
-<div id="array15" class="arraytext"></div>
-</div>
-<div class="arraycell" id="n16">
-<div id="array16" class="arraytext"></div>
-</div>
-</div>
+
+
+<h2>Input</h2>
 
 <!-- left margin -->
-<div style="clear: left;"></div>
-
-<p>
-<div class="prebox" style="width:30em;">
-PSEUDOCODE FOR RANDOMIZE IN PLACE
-<br>
-<br>
-Goal: Randomize an array A of length n
-<br>
-<br>
-RANDOMIZE-IN-PLACE(A)
-<br>
-<!--           ALGORITHM SECTION              -->
-<span id="codeloc1">
-    &nbsp;&nbsp;1. n = A.length
-</span>
-<br>
-<span id="codeloc2">
-    &nbsp;&nbsp;2. for i = 1 to n
-</span>
-<br>
-<span id="codeloc3">
-    &nbsp;&nbsp;3.&nbsp;&nbsp;&nbsp;&nbsp; swap A[i] with A[Random(i,n)] &nbsp;&nbsp;<strong>(CLICK SWAP)</strong>
-</span>
-<br>
-<br>
-
-<!--            ALGORITHM SECTION             -->
+<div style="float: left; width: 2em;">&nbsp;</div>
 
 <table>
+
 <tr>
-<td style="border: solid red 2px; background: #eef;"
-onclick="window.location.reload()";>&nbsp;Restart&nbsp;
-<td style="border: solid red 2px; background: #fee;"
-onclick="algStep()">&nbsp;Next&nbsp;
-<td style="border: solid red 2px; background: #fee;"
-onclick="swap()">&nbsp;Swap&nbsp;
+<th style="background: #cfc; width: 10em;">Value
+<td><input type="text" id="hashin">
+<tr>
+<th style="border: solid red 2px; background: #eef;"
+onclick="getInputValue()">&nbsp;Enter&nbsp;
+<th style="border: solid red 2px; background: #eef;"
+onclick="clearInputValues()">&nbsp;Clear&nbsp;
 </table>
 
-</div>
-</div><!-- i do not know if i need this extra div close -->
+<h2>
+Overview
+</h2>
+
+<p>
+This demonstrates <strong>double hashing</strong> for solving collisions (when two keys are hashed to the same index in a hash table).
+A normal hashing process consists of a hash function taking a key and producing the hash table index for that key.
+In <strong>double hashing</strong>, there are two hash functions that will take place until an empty cell is found.
+The second hash function is used to provide an offset value in case the first function causes a collision.
+<br>
+<br>
+The collided cells will have the resident value shown in red. The newly inserted element is shown in
+green.
+</p>
 
 
 <div id="footer">
-Modified: October 21th, 2021. Gabriela Serrano Echenagucia
+Updated: 5 December 2021. Gabriela Serrano Echenagucia
 </div>
 </body>
 </html>

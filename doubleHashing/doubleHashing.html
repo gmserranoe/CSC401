@@ -85,6 +85,12 @@ a {
    height: 8em ;
 }
 
+#alert{
+	text-align: center;
+	font-weight: bold;
+	color: rgb(119, 119, 119);
+}
+
 --></style>
 
 <script type="text/javascript">
@@ -92,6 +98,7 @@ a {
 //
 // Hashing code
 
+var totalElements = 0 ;
 var TABLE_SIZE = 16 ;
 
 var bucketcolor = new Array( 
@@ -182,6 +189,7 @@ function clearInputValues() {
 	for ( i=0;i<TABLE_SIZE;i++ ) {
 		putToBucket(i,"") ;
 	}
+	totalElements = 0;
 }
 
 function hashOne(j){
@@ -195,6 +203,14 @@ function hashTwo(j){
 }
 
 function hashTableInsert(j) {
+
+	if (totalElements == TABLE_SIZE){
+		document.getElementById("alert").innerHTML = "The Hash Table has been cleared and your new value has been inserted";
+		setTimeout(function() {
+         document.getElementById("alert").innerHTML = "";
+       	}, 3000);
+		clearInputValues();
+	}
 	var i = 0;
 	var h = (hashOne(j) + (i * hashTwo(j)) ) % TABLE_SIZE; 
 	while ( getFromBucket(h) != "" ) {
@@ -204,6 +220,7 @@ function hashTableInsert(j) {
 		if ( i>TABLE_SIZE ) break ;
 	}
 	putToBucket(h,j) ;
+	totalElements++ ;
 }
 
 
@@ -240,6 +257,7 @@ Hashtable
 
 </div>
 
+<p id="alert"></p>
 
 <h2>Input</h2>
 
@@ -269,13 +287,15 @@ In <strong>double hashing</strong>, there are two hash functions that will take 
 The second hash function is used to provide an offset value in case the first function causes a collision.
 <br>
 <br>
-The collided cells will have the resident value shown in red. The newly inserted element is shown in
-green.
+The collided cells will have the resident value shown in red. The newly inserted element is shown in green. 
+<br>
+<br>
+When the table reaches its capacity, the values will be cleared.
 </p>
 
 
 <div id="footer">
-Updated: 5 December 2021. Gabriela Serrano Echenagucia
+Updated: 6 December 2021. Gabriela Serrano Echenagucia
 </div>
 </body>
 </html>
